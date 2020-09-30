@@ -1,0 +1,26 @@
+ <div>
+    <div style="text-align: center;">
+        <h2>美少女管理システム</h2>
+        <h3>美少女情報が削除通知</h3>
+    </div>
+    <div>
+    <p><%=@reciver%>様、</p>
+    <p>美少女管理システムを使ってありがとうございました。<br>
+    このメールは美少女管理システムから自動的に生成されます。このメッセージには返信しないでください。</p>
+    </div>
+    <h4> <%=Date.today %> に美少女情報が削除されました。</h4>
+    <div>
+        <table style="width:80%">
+          <tr>  <td>氏名</td> <td>:</td> <td><%=@user.kanjiName %></td> </tr>
+          <tr>  <td>生年月日</td> <td>:</td> <td><%=@user.dateOfBirth%></td> </tr>
+          <tr>  <td>出身地</td> <td>:</td> <td><%=@user.birthPlace%></td> </tr>
+          <tr>  <td>特技</td> <td>:</td> <td><%=@user.specialSkill%></td> </tr>
+          <tr>  <td>趣味</td> <td>:</td> <td><%=@user.hobby%>></td> </tr>
+          <tr>  <td>アピールポイント</td> <td>:</td> <td><%=@user.appealPoint%></td> </tr>
+          <tr>  <td>採点</td> <td>:</td> <td><%=@user.score%></td> </tr>
+          <tr>  <td>削除者</td> <td>:</td> <td><%=@reg_admin.name%></td> </tr>
+        </table>
+    </div>
+ </div>
+<br> 
+<p>以上よろしくお願いいたします。</p>

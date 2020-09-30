@@ -1,0 +1,22 @@
+ <div class="form-v8">
+	<div class="page-content" style ="height: 700px;">
+		<div class="form-v8-content">
+			<div class="form-left">
+			</div>
+			<div class="form-right"> 
+                <% if @delete_status == 'deleted' %>
+				<h1 class="text-center"> 美少女情報が削除されました。</h1>
+                 <% else %>
+                    <h1 class="text-center"　style='color: red !important;'> 美少女情報が削除されませんでした。</h1>
+                 <%end%>
+				<hr class="half-rule"/>  
+				<div class="form-row-last" style="align-items: center;  display: flex; justify-content: center;"> 
+                 <%= link_to 'OK',{ action: "index", controller: "main_menu" }, :class => "btn btn-warning text-center" ,:style => "font-size: 25px;" %>
+                 </div>
+				 <br> 
+			</div> 
+		</div> 
+	</div>
+	<script type="text/javascript">
+	</script>
+</div> 

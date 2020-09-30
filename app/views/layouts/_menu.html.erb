@@ -1,0 +1,30 @@
+                <div class="tab">
+					<div class="tab-inner bg-dark menuitem">
+						<%= link_to 'ホーム',{ action: "index",controller: "main_menu"  }, :class => "tablinks d-flex justify-content-center ", :style=> "text-decoration: none;" %> 
+					</div>
+					<%if current_user.auth_type.eql? '管理者'%>
+						<div class="tab-inner bg-secondary menuitem">
+						   <%= link_to '登録',{ action: "index",controller: "registration"  }, :class => "tablinks d-flex justify-content-center" , :style=> "text-decoration: none;" %> 
+						</div>
+						
+					<div class="tab-inner bg-dark menuitem">
+						<%= link_to '検索',{ action: "new",controller: "search"  }, :class => "tablinks d-flex justify-content-center" , :style=> "text-decoration: none;" %> 
+					</div> 
+					<%else%>
+						<div class="tab-inner bg-secondary menuitem">
+							<%= link_to '検索',{ action: "new",controller: "search"  }, :class => "tablinks d-flex justify-content-center" , :style=> "text-decoration: none;" %> 
+						</div> 
+					<%end%>
+					<%if current_user.auth_type.eql? '管理者'%>
+						<div class="tab-inner bg-secondary menuitem">
+							<%= link_to 'ユーザ登録',{ action: "index",controller: "admin"  }, :class => "tablinks d-flex justify-content-center" , :style=> "text-decoration: none;" %> 
+						</div> 
+					<%end%>
+					<div class="tab-inner bg-dark  menuitem">
+						<%# <%= link_to 'ログアウト',{ action: "new",controller: "search"  }, :class => "tablinks d-flex justify-content-center" , :style=> "text-decoration: none;" %>
+						 <%= link_to 'ログアウト',{ action: "login",controller: "admin"  }, :class => "tablinks d-flex justify-content-center" , :style=> "text-decoration: none;" %>  
+					</div> 
+				</div>
+				<div class="d-flex flex-row-reverse" style="margin-bottom: 25px;">
+				<span style="font-size:25px;">Hi <%=current_user.name%> 様、</span>
+				</div>

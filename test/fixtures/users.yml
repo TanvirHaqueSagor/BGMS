@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  registrationNo: 1
+  kanjiName: MyText
+  kanaName: MyText
+  dateOfBirth: 2020-08-10
+  birthPlace: MyText
+  height: 9.99
+  weight: 9.99
+  image: MyText
+  specialSkill: MyText
+  hobby: MyText
+  charmPoint: MyText
+  holidyTimeSpand: MyText
+  appealPoint: MyText
+  score: 1
+
+two:
+  registrationNo: 1
+  kanjiName: MyText
+  kanaName: MyText
+  dateOfBirth: 2020-08-10
+  birthPlace: MyText
+  height: 9.99
+  weight: 9.99
+  image: MyText
+  specialSkill: MyText
+  hobby: MyText
+  charmPoint: MyText
+  holidyTimeSpand: MyText
+  appealPoint: MyText
+  score: 1

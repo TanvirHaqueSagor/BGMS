@@ -1,0 +1,187 @@
+ <div class="form-v8">
+	<div class="page-content">
+		<div class="form-v8-content">
+			<div class="form-right">
+				 <%= render './layouts/menu' %> 
+				<h1 class="text-center">  美少女管理システム</h1>
+				<hr class="half-rule"/>
+				<br> 
+				<% unless @searchresult.nil? %>
+					<div class="container" style=" color: white;">
+						<table role='datatable'  id="result_table" class="table table-striped table-bordered" style="width: 100%; color: white;">
+					        <thead class ="bg-transparent"   style= "border: none !important;">
+					      		<tr>
+					      	    	<th class=" d-flex justify-content-center" style="width:100%; border: none !important;">最新の美少女情報</th>  
+					      		</tr>
+					        </thead>
+					      	<tbody>
+                              <%@index = 1 %>
+							  <%@row_index = 0%>
+							  <%@current_date = @searchresult[0].created_at.to_date%>
+							  <%@temp_date = @current_date%>
+							  <%@first_date = @current_date%>
+
+							  <%@searchresult.each do |result| %> 
+
+								<%@entry_date = result.created_at.to_date%> 
+								<%if @entry_date < @current_date%>
+							 		<% @temp_date = @entry_date %>
+							 		<% @current_date = @entry_date %>
+							    <%end%>
+							  	<% if @entry_date == @temp_date %>
+							  	<% @temp_date = 0%>
+								<%@index=1%>
+									<tr>
+					     				<td style="padding: 0.0rem !important; ">
+                                	     <div class="card bg-secondary text-white" style="width:100%;">
+                                	       <div class="card-body" style="padding-top: 0.0rem !important; padding-bottom: 0.0rem !important;">
+                                	            <div class="row no-gutters">
+                                	                <div class="col-12">
+															<%if @first_date == @entry_date %>
+                                	                     		<p class="card-text" style="padding-top: 0.0rem !important;"><span style="color:red;" > New</span> <%=@entry_date%> 新しい美少女が登録されました.</p>
+
+															<%else%>
+                                	                     		<p class="card-text" style="padding-top: 0.0rem !important;"><%=@entry_date%> 新しい美少女が登録されました.</p>
+															<%end%>
+                                	                </div>
+                                	            </div>
+                                	       </div>
+                                	     </div>
+                                	    </td>
+					     			</tr>
+							 	<%end%>
+
+								 <%@row_index += 1%>
+					     		<tr>
+					     			<td style="padding: 0.4rem !important;">
+                                     <div class="card bg-transparent text-white " style="width:100%;">
+                                       <%# <img class="card-img-top" src="img_avatar1.png" alt="Card image"> %>
+                                       <div class="card-body">
+                                            <div class="row no-gutters">
+                                                <div class="col-1 my-auto labelmargin">
+                                                     <h4 class="card-title"><%=@index%></h4>
+                                                </div>
+                                                <div class="col-2 labelmargin">
+                                                    <% if result.image.attached? %> 
+                                                      <%= image_tag result.image , class: "img-fluid img-thumbnail", :size => "100x100" %>
+                                                    <%else%>
+							                        	<img src="<%= asset_path( 'thumb.jpg' ) %>" id='img-upload' class=" img-fluid img-thumbnail" style="height:100px; width:100px;" alt="Responsive image"/>
+                                                     <% end %>
+                                                </div>
+                                                <div class="col-4 labelmargin">
+                                                    <p class="card-text" style="margin-bottom: 1px !important;">名前 (漢字)： <%= result.kanjiName %></p>
+                                                    <p class="card-text" style="margin-bottom: 1px !important;">生年月日 &nbsp;&nbsp;： <%= result.dateOfBirth %></p>
+                                                    <p class="card-text" style="margin-bottom: 1px !important;">出身地 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;： <%= result.birthPlace %></p>
+                                                </div>
+                                                
+                                                <div class="col-4 labelmargin">
+                                                    <p class="card-text" style="margin-bottom: 1px !important;">名前(かな)： <%= result.kanaName %></p>
+                                                    <p class="card-text" style="margin-bottom: 1px !important;">身長(cm)&nbsp;&nbsp;： <%= result.height %></p>
+                                                    <p class="card-text" style="margin-bottom: 1px !important;">体重 (kg)&nbsp;&nbsp;： <%= result.weight %></p>
+                                                </div>
+                                                <div class="col-1 labelmargin">
+						    						 <%= link_to '確認',{ action: "show",controller: "search", :registrationNo => result.registrationNo }, :class => "btn btn-primary" %> 
+                                                </div>
+                                            </div>
+                                            <% @index+= 1%>
+                                       </div>
+                                     </div>
+                                    </td>
+					     		</tr>
+							  <% end %>
+					       </tbody>
+					     </table>
+					</div>
+				<%else%>
+				<div class="row" style="padding-left:20px !important;">
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+					<h3>過去3日間の登録データはありません!</h3> 
+				</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div> 
+<script type="text/javascript">
+	$(document).ready( function() {  
+	 
+	// if($('[id="result_table_wrapper"]').length < 1 {
+  			// exists twice 
+
+ 	var table = $('#result_table').DataTable({
+			
+			"language": {
+			 
+			"emptyTable":     "テーブル内のデータなし",
+			"info":           "_TOTAL_件中_START_から_END_まで表示", //"Showing _START_ to _END_ of _TOTAL_ entries",
+			"infoEmpty":      "0件中0から0まで表示　",
+			"infoFiltered":   "(合計_MAX_件のフィルター)", // "(filtered from _MAX_ total entries)",
+			"lengthMenu":     "表示 _MENU_", // "Show _MENU_ entries",
+			"loadingRecords": "読み込み中...", // "Loading...",
+			"processing":     "プロセッシング...", // "Processing...",
+			"search":         "検索:",
+			"zeroRecords":    "該当するデータがありませんでした",  //"No matching records found",
+			"paginate": {
+			  "previous": " 前",
+			  "next": " 次",
+			  "Show": " 1"
+
+			   }
+  			},
+			"bSort" : false 
+		});  
+		$('.dataTables_filter').addClass('pull-right');  
+		$('.pagination').addClass('pull-right');  
+		$('.dataTables_paginate').addClass('pull-right');  
+
+	 	document.addEventListener("turbolinks:before-cache", function() {
+  			if (table !== null) {
+  			 table.destroy();
+   			 table = null;
+  					}
+			});
+		//  paging_simple_numbers
+		var selectedRegId = 0;
+		$('#result_table tbody').on( 'click', 'tr', function () {
+        	if ( $(this).hasClass('selected') ) {
+				$(this).removeClass('selected');
+				selectedRegId =  0;
+        	}
+        	else {
+        	    table.$('tr.selected').removeClass('selected');
+				$(this).addClass('selected');
+				selectedRegId = $(this).find("td:eq(0)").text();  
+			}
+			
+			$('#select_button').prop('href', '/search/show?registrationNo='+selectedRegId);
+    	});
+    	// $('#button').click( function () {
+    	//     table.row('.selected').remove().draw( false );
+		// });
+		
+		 $('#select_button').click(function(event){
+			  
+			 var url =$(this).attr('href');
+			 var id = getURLParameter(url, 'registrationNo');
+			 if(id == 0){ 
+   			 	//   alert('対象選択してください');
+				 $("#exampleModal").modal();
+   			 	  event.preventDefault(); // Prevent link from following its href
+			 }
+			 else{ 
+				 //Do nothing 
+			 }
+  			});
+		function getURLParameter(url, name) {
+    		return (RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1];
+		}
+
+   });
+
+</script>
+ 

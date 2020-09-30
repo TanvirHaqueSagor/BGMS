@@ -1,0 +1,248 @@
+ <div class="form-v8">
+	<div class="page-content">
+		<div class="form-v8-content">
+			<div class="form-left">
+			</div>
+			<div class="form-right">
+				 <%= render './layouts/menu' %> 
+				<h1 class="text-center">  美少女情報　検索</h1>
+				<hr class="half-rule"/>
+				<br>
+                <%= form_with scope: :searchinfo, url: search_find_path,    local: true, class: "form-detail" do |form| %>
+			       <% if  @error != 'init' %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> 入力情報を確認して、正しい値を入力してください. 
+						</div> 
+					<% end %>
+				    <div class="tabcontent" id="sign-up">
+ 					    <div class="form-row">
+					     	<div class="form-group col-md-6">
+					    		<div class="row no-gutters">
+					    			<div class="col-3 labelmargin">
+					    				<label for="regNoFrom">登録No.</label> 
+					    			</div>
+					    			<div class="col-4 "> 
+					    				 <%= form.number_field :regNoFrom, placeholder: "0000001",  class: 'form-control'   %>
+					    			</div> 
+                                    <div class="col-1"> 
+                                         <label for="regNoTo", style="padding-left:15px"> ~</label> 
+					    			</div>
+                                    <div class="col-4 "> 
+					    				 <%= form.number_field :regNoTo, placeholder: "9999999",  class: 'form-control'   %>
+					    			</div> 
+					    		</div>
+					    	</div> 
+					    </div>
+                        <div class="form-row">
+					     	<div class="form-group col-md-6">
+					    		<div class="row no-gutters">
+					    			<div class="col-3 labelmargin">
+					    				<label for="kanjiName">名前（漢字）</label> 
+					    			</div>
+					    			<div class="col-9 "> 
+									    <%= form.text_field :kanjiName, placeholder: "河合　衣代奈",maxlength: "30",  class: 'form-control' %>
+					    			</div>
+					    		</div>
+					    	</div> 
+ 					      <div class="form-group col-md-6">
+ 					          <div class="row no-gutters">
+					    			<div class="col-3 labelmargin">
+					    				<label for="registrationNo">名前（かな）</label> 
+					    			</div>
+					    			<div class="col-9" style="padding-left: 10px;"> 
+									    <%= form.text_field :kanaName, placeholder: "かわい　いよな",maxlength: "50",  class: 'form-control'%> 
+					    			</div>
+					    		</div>
+ 					       </div> 
+					    </div>
+ 					    <div class="form-row">
+					     	<div class="form-group col-md-6">
+					    		<div class="row no-gutters">
+					    			<div class="col-3 labelmargin">
+					    				<label for="dateOfBirthFrom">生年月日 </label> 
+					    			</div>
+					    			<div class="col-4 "> 
+									    <%= form.date_field :dateOfBirthFrom,   placeholder: "YYYY/MM/DD",  class: 'form-control'  %> 
+					    			</div> 
+                                    <div class="col-1"> 
+                                         <label for="dateOfBirthTo", style="padding-left:15px"> ~</label> 
+					    			</div>
+                                    <div class="col-4 "> 
+									    <%= form.date_field :dateOfBirthTo,   placeholder: "YYYY/MM/DD",  class: 'form-control'  %> 
+					    			</div> 
+					    		</div>
+					    	</div> 
+					    </div>
+ 					    <div class="form-row">
+					     	<div class="form-group col-md-6">
+					    		<div class="row no-gutters">
+					    			<div class="col-3 labelmargin">
+					    				<label for="birthPlace">出身地 </label> 
+					    			</div>
+					    			<div class="col-9 "> 
+								    	<%= form.select :birthPlace, options_for_select(@birthPlace_array, @searchinfo.birthPlace),{},{class: "form-control selectorbg" , id: "birthPlace"  }   %>
+					    			</div>  
+					    		</div>
+					    	</div> 
+					    </div>
+                        <div class="form-row">
+					     	<div class="form-group col-md-6">
+					    		<div class="row no-gutters">
+					    			<div class="col-3 labelmargin">
+					    				<label for="scoreFrom">点数 </label> 
+					    			</div>
+					    			<div class="col-4 "> 
+									    <%= form.number_field  :scoreFrom ,  step: :any, placeholder: "1.0",  class: 'form-control'   %>  
+					    			</div> 
+                                    <div class="col-1"> 
+                                         <label for="scoreTo", style="padding-left:15px"> ~</label> 
+					    			</div>
+                                    <div class="col-4 "> 
+									    <%= form.number_field  :scoreTo ,  step: :any, placeholder: "100",  class: 'form-control'   %>  
+					    			</div> 
+					    		</div>
+					    	</div> 
+                            <div class="form-group col-md-6">
+					    		<div class="row no-gutters">
+							        <%= form.submit '検索' , class: "btn btn-outline-warning btn-rounded btn-sm my-0", style: "width:100px; height:40px;"%> 
+					    		</div>
+					    	</div> 
+					    </div>
+					</div>
+				<% end %>
+				<br>
+				<% unless @searchresult.nil? %>
+					<div class="container" style=" color: white;">
+						<table role='datatable'  id="result_table" class="table table-striped table-bordered" style="width: 100%; color: white;">
+					        <thead style=" background-color: grey">
+					      		<tr>
+					      	    	<th>登録No.</th>
+					      	    	<th>名前（漢字）</th>
+					      	    	<th>名前（かな）</th>
+					      	    	<th>生年月日</th>
+					      	    	<th>出身地</th>
+					      	    	<th>点数</th>
+									  
+					      		</tr>
+					        </thead>
+					      	<tbody>
+							  <% @searchresult.each do |result| %>
+					     		<tr>
+					     			<td><%=result.registrationNo%></td>
+					     			<td><%=result.kanjiName%></td>
+					     			<td><%=result.kanaName%></td>
+					     			<td><%=result.dateOfBirth%></td>
+					     			<td><%=result.birthPlace%></td>
+					     			<td><%=result.score%></td>
+					     		</tr>
+							  <% end %>
+					       </tbody>
+					     </table>
+                		 
+                		<div class="form-row-last" id="search_res_button" style="padding-left: 75%;"> 
+                		     <%= link_to 'クリア',{ action: "clear" }, :class => "btn btn-warning" %>
+							  
+                		     <%= link_to '選択',{ action: "show", :registrationNo => 0 },   :class => "btn btn-success", :id => "select_button"  %>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div> 
+<script type="text/javascript">
+	$(document).ready( function() {  
+	 
+	// if($('[id="result_table_wrapper"]').length < 1 {
+  			// exists twice 
+
+ 	var table = $('#result_table').DataTable({
+			"language": {
+			 
+			"emptyTable":     "テーブル内のデータなし",
+			"info":           "_TOTAL_件中_START_から_END_まで表示", //"Showing _START_ to _END_ of _TOTAL_ entries",
+			"infoEmpty":      "0件中0から0まで表示　",
+			"infoFiltered":   "(合計_MAX_件のフィルター)", // "(filtered from _MAX_ total entries)",
+			"lengthMenu":     "表示 _MENU_", // "Show _MENU_ entries",
+			"loadingRecords": "読み込み中...", // "Loading...",
+			"processing":     "プロセッシング...", // "Processing...",
+			"search":         "検索:",
+			"zeroRecords":    "該当するデータがありませんでした",  //"No matching records found",
+			"paginate": {
+			  "previous": " 前",
+			  "next": " 次",
+			  "Show": " 1"
+
+			   }
+  			}
+		}); 
+		$('.dataTables_filter').addClass('pull-right');  
+		$('.pagination').addClass('pull-right');  
+		$('.dataTables_paginate').addClass('pull-right');  
+
+	 	document.addEventListener("turbolinks:before-cache", function() {
+  			if (table !== null) {
+  			 table.destroy();
+   			 table = null;
+  					}
+			});
+		//  paging_simple_numbers
+		var selectedRegId = 0;
+		$('#result_table tbody').on( 'click', 'tr', function () {
+        	if ( $(this).hasClass('selected') ) {
+				$(this).removeClass('selected');
+				selectedRegId =  0;
+        	}
+        	else {
+        	    table.$('tr.selected').removeClass('selected');
+				$(this).addClass('selected');
+				selectedRegId = $(this).find("td:eq(0)").text();  
+			}
+			
+			$('#select_button').prop('href', '/search/show?registrationNo='+selectedRegId);
+    	});
+    	// $('#button').click( function () {
+    	//     table.row('.selected').remove().draw( false );
+		// });
+		
+		 $('#select_button').click(function(event){
+			  
+			 var url =$(this).attr('href');
+			 var id = getURLParameter(url, 'registrationNo');
+			 if(id == 0){ 
+   			 	//   alert('対象選択してください');
+				 $("#exampleModal").modal();
+   			 	  event.preventDefault(); // Prevent link from following its href
+			 }
+			 else{ 
+				 //Do nothing 
+			 }
+  			});
+		function getURLParameter(url, name) {
+    		return (RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1];
+		}
+
+   });
+
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel" style="color: black;">選択確認</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="color: black;">
+              対象選択してください.
+            </div>
+            <!-- Delete button in the footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary " data-dismiss="modal">OK</button> 
+            </div>
+    	</div>
+    </div>
+</div>

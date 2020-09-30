@@ -1,0 +1,70 @@
+ <div class="form-v8">
+	<div class="page-content">
+		<div class="form-v8-content">
+			<div class="form-left">
+				<img src="<%= asset_path( 'form-v8.jpg' ) %>" id='adminicon' class=" img-fluid"  alt="Responsive image"/>
+			</div>
+			<div class="form-right"> 
+				<h1 class="text-center"> 美少女管理システム</h1>
+				<hr class="half-rule"/>
+				<br>
+                <%= form_with scope: :logininfo, url: admin_login_path,    local: true, class: "form-detail" do |form| %>
+					<% if @logininfo.errors[:userid].any?  %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> <%= @admin.errors.messages[:userid][0] %> 
+						</div>  
+					<% elsif @logininfo.errors[:password].any?  %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> <%= @admin.errors.messages[:password][0] %> 
+						</div>  
+					<%elsif  @login_status.eql? "failed"%>
+						<div class="alert alert-danger alert-dismissible fade show">
+   							<strong>エラー! </strong>  ユーザIDまたはパスワードが間違っています！
+						</div> 
+					<%elsif  @login_status.eql? "blank_userid"%>
+						<div class="alert alert-danger alert-dismissible fade show">
+   							<strong>エラー! </strong>  ユーザIDが入力されていません！
+						</div> 
+					<%elsif  @login_status.eql? "blank_password"%>
+						<div class="alert alert-danger alert-dismissible fade show">
+   							<strong>エラー! </strong>  パスワードが入力されていない！
+						</div> 
+					<% end %>
+				 <div class="tabcontent" id="sign-up">
+ 					 <div class="form-row">
+ 					   <div class="form-group col-md-12">
+                            <br> 
+                            <br>
+                            <div class="row no-gutters">
+								<div class="col-2 labelmargin">
+								</div>
+								<div class="col-10"> 
+									<label for="userid">ユーザID . メールアドレス  </label> 
+									<%= form.text_field  :userid ,  step: :any, placeholder: "入力",  class: 'form-control'   %>  
+								</div>
+							</div> 
+                            <div class="row no-gutters">
+							
+								<div class="col-2 labelmargin">
+								</div>
+								<div class="col-10"> 
+									<br>
+									<label for="password">パスワード  </label> 
+									<%= form.password_field  :password ,  step: :any, placeholder: "パスワードを入力",  class: 'form-control'   %>  
+								</div>
+							</div> 
+						  </div>
+ 					    </div> 
+						<div class="form-row-last" style="float: right;" > 
+							 <%= form.submit 'ログイン' , class: "register" %> 
+					    </div>
+					</div>
+				<% end %>
+				 
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	    
+	</script>
+</div> 

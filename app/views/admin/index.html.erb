@@ -1,0 +1,150 @@
+ <div class="form-v8">
+	<div class="page-content">
+		<div class="form-v8-content">
+			<div class="form-left">
+               
+			</div>
+			<div class="form-right">
+				 <%= render './layouts/menu' %> 
+				<h1 class="text-center"> ユーザ登録</h1>
+				<hr class="half-rule"/>
+				<br>
+                <%= form_with scope: :admin, url: admin_saveinfo_path,    local: true, class: "form-detail" do |form| %>
+					<% if @admin.errors[:name].any? %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> <%= @admin.errors.messages[:name][0] %> 
+						</div> 
+					<% elsif @admin.errors[:userid].any?  %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> <%= @admin.errors.messages[:userid][0] %> 
+						</div> 
+					<% elsif @admin.errors[:email].any?  %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> <%= @admin.errors.messages[:email][0] %> 
+						</div> 
+					<% elsif @admin.errors[:auth_type].any?  %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> <%= @admin.errors.messages[:auth_type][0] %> 
+						</div> 
+					<% elsif @admin.errors[:password].any?  %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> <%= @admin.errors.messages[:password][0] %> 
+						</div> 
+					<% elsif @admin.errors[:conf_password].any?  %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> <%= @admin.errors.messages[:conf_password][0] %> 
+						</div> 
+					<%elsif  @save_status.eql? "alrady"%>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong>  ユーザーIDは既に存在します！
+						</div> 
+					<%elsif  @save_status.eql? "email_alrady"%>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong>  メールは既に存在します！
+						</div> 
+					<%elsif  @save_status.eql?  "pass_mismatch" %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong>  確認用パスワードが一致しません！
+						</div>  
+					<%elsif  @save_status.eql?  "pass_invalid" %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong>  半角英字小文字、大文字、数字 、記号以内の３パターン以上の組み合わせで記入してください！
+						</div> 
+					<%elsif  @save_status.eql? "failed"%>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> 　ユーザが登録失敗しました！
+						</div>  
+					<%elsif  @save_status.eql? "success"%>
+						<div class="alert alert-success alert-dismissible fade show">
+   							<strong>成功 ! </strong>ユーザが登録されました！
+						</div>　
+					<% end %>
+
+				 <div class="tabcontent" id="sign-up">
+ 					 <div class="form-row">
+					  	<div class="form-group col-md-5">
+							<div style="height: 100%; width: 100%; padding-left: 15px;"> 
+						    	<img src="<%= asset_path( 'adminicon2.svg' ) %>" id='adminicon' class=" img-fluid"  alt="Responsive image"/>
+							</div>
+						</div> 
+
+	                    <div class="form-group col-md-1">
+						</div> 
+ 					   <div class="form-group col-md-6">
+                            <br>
+                            <br>
+                            <br>
+ 					       <div class="row no-gutters">
+								<div class="col-4 labelmargin">
+									<label for="name">氏名 </label> 
+								</div>
+								<div class="col-8"> 
+									<%= form.text_field  :name ,  step: :any, placeholder: "一千花",  class: 'form-control'   %>  
+								</div>
+							</div>
+                            <div class="row no-gutters">
+								<div class="col-4 labelmargin">
+									<label for="userid">ユーザID  </label> 
+								</div>
+								<div class="col-8" > 
+									<%= form.text_field  :userid ,  step: :any, placeholder: "user123",  class: 'form-control'  %>  
+								</div>
+							</div>
+							 <div class="row no-gutters">
+								<div class="col-4 labelmargin">
+									<label for="group">グループ  </label> 
+								</div>
+								<div class="col-8" > 
+									<%= form.text_field  :group ,  step: :any, placeholder: "INWCグループ",  class: 'form-control'  %>  
+								</div>
+							</div>
+                            <div class="row no-gutters">
+								<div class="col-4 labelmargin">
+									<label for="auth_type">ユーザ権限 </label> 
+								</div>
+								<div class="col-8"> 
+								 	<%= form.select :auth_type,  [['権限を選択', '権限を選択'],['スーパーユーザー', 'スーパーユーザー'],['管理者', '管理者'], ['一般', '一般']],{},{class: "form-control selectorbg" , id: "birthPlace"  }   %>
+
+								</div>
+							</div>
+							<div class="row no-gutters">
+								<div class="col-4 labelmargin">
+									<label for="email">メールアドレス </label> 
+								</div>
+								<div class="col-8" > 
+									<%= form.text_field  :email ,  step: :any, placeholder: "user123@example.com",  class: 'form-control'  %>  
+								</div>
+							</div>
+                            <div class="row no-gutters">
+								<div class="col-4 labelmargin">
+									<label for="password">パスワード  </label> 
+								</div>
+								<div class="col-8"> 
+									<%= form.password_field  :password ,  step: :any, placeholder: "パスワード",  class: 'form-control'   %>  
+								</div>
+							</div>
+                            <div class="row no-gutters">
+								<div class="col-4 labelmargin">
+									<label for="conf_password">確認用パスワード   </label> 
+								</div>
+								<div class="col-8"> 
+									<%= form.password_field  :conf_password ,  step: :any, placeholder: "パスワード",  class: 'form-control'   %>  
+								</div>
+							</div>
+						  </div>
+ 					    </div> 
+						  
+						<div class="form-row-last" style="padding-left: 80%;"> 
+							 <%= form.submit '登録' , class: "btn btn-success"%> 
+                        	 <%= link_to '戻る',{ action: "index" , controller: "main_menu" }, :class => "btn btn-warning" %> 
+
+					    </div>
+					</div>
+				<% end %>
+				 
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	</script>
+</div> 

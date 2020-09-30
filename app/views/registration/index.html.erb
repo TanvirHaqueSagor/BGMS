@@ -1,0 +1,231 @@
+ <div class="form-v8">
+	<div class="page-content">
+		<div class="form-v8-content">
+			<div class="form-left">
+               
+			</div>
+			<div class="form-right">
+				 <%= render './layouts/menu' %> 
+				<h1 class="text-center">  美少女情報　入力画面</h1>
+				<hr class="half-rule"/>
+				<br>
+                <%= form_with scope: :user, url: registration_saveinfo_path,    local: true, class: "form-detail" do |form| %>
+					<% if @user.errors.any? %>
+						<div class="alert alert-warning alert-dismissible fade show">
+   							<strong>エラー! </strong> 必須入力が漏れています、内容を確認してください. 
+						</div>
+					<%   elsif @save_status.eql?'success' %>
+						<div class="alert alert-success alert-dismissible fade show">
+   							<strong>成功 ! </strong> 美少女情報が正常に登録されました. 
+						</div>
+					<% elsif @save_status.eql? 'failed' %>
+						<div class="alert alert-danger alert-dismissible fade show">
+   							<strong>失敗 ! </strong> 美少女情報の登録に失敗しました. 
+						</div>
+					<% end %>
+
+				 <div class="tabcontent" id="sign-up">
+ 					 <div class="form-row">
+					  	<div class="form-group col-md-5">
+							<div class="row no-gutters">
+								<div class="col-3  labelmargin">
+									<label for="registrationNo">登録No.</label> 
+								</div>
+								<div class="col-9 "> 
+									 <%= form.text_field :registrationNo, placeholder: "1234567",  class: 'form-control',  required: true   %>
+								</div>
+							</div>
+							<div class="row no-gutters">
+								<div class="col-3 labelmargin">
+									<label for="kanjiName">名前(漢字)  <span>*</span></label> 
+								</div>
+								<div class="col-9"> 
+									<%= form.text_field :kanjiName, placeholder: "河合　衣代奈",maxlength: "30",  class: 'form-control', required: true  %>
+								</div>
+							</div>
+							<div class="row no-gutters">
+								<div class="col-3 labelmargin">
+									<label for="kanaName">名前(かな) <span>*</span></label> 
+								</div>
+								<div class="col-9">
+									<%= form.text_field :kanaName, placeholder: "かわい　いよな",maxlength: "50",  class: 'form-control', required: true   %> 
+								</div>
+							</div>
+							<div class="row no-gutters">
+								<div class="col-3 labelmargin">
+									<label for="dateOfBirth">生年月日 <span>*</span></label> 
+								</div>
+								<div class="col-9">
+									<%= form.date_field :dateOfBirth,   placeholder: "YYYY/MM/DD",  class: 'form-control', required: true   %> 
+	 							</div>
+							</div>
+							<div class="row no-gutters">
+								<div class="col-3 labelmargin">
+									<label for="birthPlace">出身地 <span>*</span></label> 
+								</div>
+								<div class="col-9">  
+								 	<%= form.select :birthPlace, options_for_select(@birthPlace_array, @user.birthPlace),{},{class: "form-control selectorbg" , id: "birthPlace"  }   %>
+								 
+ 								</div>
+							</div>
+							<div class="row no-gutters">
+								<div class="col-3 labelmargin">
+									<label for="height">身長(cm)</label> 
+								</div>
+								<div class="col-9">
+									<%= form.number_field  :height ,   step: :any, placeholder: "160.2",  class: 'form-control'   %>  
+								</div>
+							</div>
+							<div class="row no-gutters">
+								<div class="col-3 labelmargin">
+									<label for="weight">体重(kg)</label> 
+								</div>
+								<div class="col-9"> 
+									<%= form.number_field  :weight ,  step: :any, placeholder: "50.1",  class: 'form-control'   %>  
+								</div>
+							</div>
+
+						</div> 
+ 					   <div class="form-group col-md-7">
+ 					      <div class="container-fluid p-0"> 
+							    <div class="form-group">
+							        <div class="input-group">
+							            <div class="row no-gutters", style="width: 100%;"> 
+										  <div class="col-4">
+							                	<span class="btn btn-default btn-file">
+												<label class="btn btn-secondary " >写真アップロード</label>
+												 <%= form.file_field :image,  class: 'form-control'   %>
+							                	</span> 
+											</div>
+											<div class="col-8">
+							            	    <input type="text" class="form-control" readonly>
+											</div>
+										</div>
+							        </div>
+									<div style="height: 150px; width: 180px; padding-left: 15px;"> 
+							        	<img src="<%= asset_path( 'thumb.jpg' ) %>" id='img-upload' class=" img-fluid img-thumbnail"  alt="Responsive image"/>
+									</div>
+							    </div> 
+						  </div>
+ 					    </div> 
+						<div class="form-row">
+						    <div class="form-group col-md-5">
+								<div class="row no-gutters">
+									<div class="col-3 labelmargin">
+										<label for="specialSkill">特技</label> 
+									</div>
+									<div class="col-9 ">
+									<%= form.text_field :specialSkill, placeholder: "音楽家", maxlength: "200" , class: 'form-control'   %>  
+									</div>
+								</div>
+
+								<div class="row no-gutters">
+									<div class="col-3 labelmargin">
+										<label for="hobby">趣味</label> 
+									</div>
+									<div class="col-9"> 
+										<%= form.text_field :hobby, placeholder: "本日を読むこと", maxlength: "200" ,  class: 'form-control'   %>  
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-md-7">
+								<div class="row no-gutters">
+									<div class="col-3 labelmargin">
+										<label for="charmPoint">チャームポイント</label> 
+									</div>
+									<div class="col-9 "> 
+										<%= form.text_field :charmPoint, placeholder: "濃いまゆげ", maxlength: "200" ,  class: 'form-control'   %>  
+									</div>
+								</div>
+								 
+								<div class="row no-gutters">
+									<div class="col-3 labelmargin">
+										<label for="holidyTimeSpand">休日の過ごし方</label> 
+									</div>
+									<div class="col-9">
+										 <%= form.text_field :holidyTimeSpand, placeholder: "読書しながら紅茶を味わう", maxlength: "200" ,  class: 'form-control'   %>   
+									</div>
+								</div>
+							</div>
+						</div>
+						 
+						<div class="form-row">
+							<div class="form-group col-md-9">  
+								<label for="appealPoint">アピールポイント</label> 
+								<%= form.text_area :appealPoint, cols: "30", rows: "6", id: 'appealPoint', maxlength: "1000" , class: 'form-control',style: "min-width: 100%; background: #85929E; color: white;" %>
+							</div>  
+							<div class="form-group col-md-2"> 
+								<label for="scoreText" id="scoreTextlabel" style="padding-left: 20%;" >採点</label> 
+								<div class="score">
+									<h1 id='scoreText'>採点</h1>
+									 <%= form.hidden_field :score, :value => "0" %>
+								</div>  
+							</div>  
+							<div class="form-group col-md-1 scoremark"> 
+								<label for="scoreText" id="scoreTextMark"></label> 
+							</div>
+						</div>
+						 
+						<div class="form-row-last" style="padding-left: 75%;"> 
+                             <%= link_to 'クリア',{ action: "clear" }, :class => "btn btn-warning" %>
+							 <%= form.submit '登録' , class: "btn btn-success"%>
+							 <%= button_tag "採点", type: 'button', onclick: "display_score()", class: 'btn btn-primary' %>
+					    </div>
+					</div>
+				<% end %>
+				 
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	   
+	 $(document).ready( function() {   
+		 
+    	$(document).on('change', '.btn-file :file', function() {
+		var input = $(this),
+			label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+		input.trigger('fileselect', [label]);
+		});
+
+		$('.btn-file :file').on('fileselect', function(event, label) {
+		    
+		    var input = $(this).parents('.input-group').find(':text'),
+		        log = label;
+		    
+		    if( input.length ) {
+		        input.val(log);
+		    } else {
+		        if( log ) alert(log);
+		    }
+	    
+		});
+		function readURL(input) {
+		    if (input.files && input.files[0]) {
+		        var reader = new FileReader();
+		        
+		        reader.onload = function (e) {
+		            $('#img-upload').attr('src', e.target.result);
+		        }
+		        
+		        reader.readAsDataURL(input.files[0]);
+		    }
+		}
+	
+
+		// $("#imgInp").change(function(){
+		 $("#user_image").change(function(){
+		    readURL(this);
+		}); 	
+	});
+
+	function display_score(){
+		var scr = Math.floor((Math.random() * 100) + 1);
+		$('#scoreText').text(scr);
+		$('#user_score').text(scr);
+		$('#user_score').val(scr); 
+		$('#scoreTextMark').text("点"); 
+
+		 
+	}
+	</script>
+</div> 
